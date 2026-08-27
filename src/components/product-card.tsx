@@ -5,6 +5,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 import { WishlistButton } from "./wishlist-button";
+import { CompareButton } from "./compare-button";
+import { useCompare } from "./compare-provider";
 import { useQuickView } from "./quick-view-provider";
 import { getSellerById } from "@/data/sellers";
 
@@ -25,6 +27,8 @@ function hasRealImage(src: string): boolean {
 export function ProductCard({ product, className }: ProductCardProps) {
   const firstColor = product.colors[0];
   const { openQuickView } = useQuickView();
+  const { isComparing } = useCompare();
+  const comparing = isComparing(product.id);
   const seller = getSellerById(product.sellerId);
   const badgeLabel = product.badge === "new"
     ? "NEW"
@@ -45,7 +49,10 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <Link href={`/products/${product.slug}`} className="block">
           {/* Image area */}
           <div
-            className="relative aspect-square overflow-hidden mb-3"
+            className={cn(
+              "relative aspect-square overflow-hidden mb-3 transition-[outline] duration-200",
+              comparing && "outline outline-2 outline-offset-[-2px] outline-charcoal"
+            )}
             style={{ background: productGradient(firstColor.hex) }}
           >
             {badgeLabel && (
@@ -98,9 +105,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
           </div>
         </Link>
 
-        {/* Wishlist button — top-right, shows on hover */}
-        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 md:block hidden">
-          <WishlistButton productId={product.id} className="bg-white/90 rounded-full p-1.5 hover:bg-white" />
+        {/* Compare + wishlist — top-right; compare always visible (list-view entry point), wishlist on hover (desktop) */}
+        <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5">
+          <CompareButton product={product} />
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 md:block hidden">
+            <WishlistButton productId={product.id} className="bg-white/90 rounded-full p-1.5 hover:bg-white" />
+          </div>
         </div>
       </div>
 

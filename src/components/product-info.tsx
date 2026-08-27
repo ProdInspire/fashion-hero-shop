@@ -8,6 +8,7 @@ import { ColorSwatches } from "@/components/color-swatches";
 import { SizeSelector } from "@/components/size-selector";
 import { useCart } from "@/components/cart-provider";
 import { WishlistButton } from "@/components/wishlist-button";
+import { CompareButton } from "@/components/compare-button";
 import { getSellerById } from "@/data/sellers";
 
 interface ProductInfoProps {
@@ -105,6 +106,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <WishlistButton productId={product.id} className="mt-1 flex-shrink-0" />
         </div>
         <StarRating rating={product.rating} count={product.reviewCount} />
+        <div className="mt-3">
+          <CompareButton product={product} variant="utility" />
+        </div>
         {seller && (
           <Link
             href={`/collections/all?seller=${seller.slug}`}

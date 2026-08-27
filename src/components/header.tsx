@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { SearchIcon, UserIcon, CartIcon, MenuIcon, CloseIcon, HeartIcon } from "./icons";
+import { SearchIcon, UserIcon, CartIcon, MenuIcon, CloseIcon, HeartIcon, CompareIcon } from "./icons";
 import { SearchModal } from "./search-modal";
 import { MegaMenuNav, MobileMegaMenuContent } from "./mega-menu";
 import { useAuth } from "./auth-provider";
@@ -16,9 +16,10 @@ interface HeaderProps {
   onCartOpen?: () => void;
   cartCount?: number;
   wishlistCount?: number;
+  compareCount?: number;
 }
 
-export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderProps) {
+export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0, compareCount = 0 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { user } = useAuth();
@@ -72,6 +73,18 @@ export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderP
             {wishlistCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
                 {wishlistCount}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/compare"
+            aria-label="Compare products"
+            className="hidden sm:block p-1 hover:opacity-60 transition-opacity relative"
+          >
+            <CompareIcon className="h-5 w-5" />
+            {compareCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-charcoal text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                {compareCount}
               </span>
             )}
           </Link>
