@@ -260,6 +260,41 @@ export function HeartFilledIcon({ className }: IconProps) {
   );
 }
 
+export function CompareIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-5 w-5", className)}
+    >
+      <rect x="3" y="4" width="7" height="16" rx="1" />
+      <rect x="14" y="4" width="7" height="16" rx="1" />
+      <line x1="6.5" y1="9" x2="6.5" y2="9" />
+      <line x1="17.5" y1="9" x2="17.5" y2="9" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("h-3.5 w-3.5", className)}
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
 export function ChevronDownIcon({ className }: IconProps) {
   return (
     <svg
